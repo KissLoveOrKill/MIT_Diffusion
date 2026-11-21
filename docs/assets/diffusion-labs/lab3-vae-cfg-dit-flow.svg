@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="946" viewBox="0 0 1360 946" role="img" aria-labelledby="title desc">
+<title id="title">VAE、条件 Flow Matching 与 DiT 流程总览</title><desc id="desc">三个通道依次展示训练 VAE、冻结编码器后训练潜空间速度、以及 CFG 和 Euler 逐步生成。</desc>
+<rect x="0" y="0" width="1360" height="946" rx="0" fill="#f6f8fa" stroke="none"/>
+<rect x="28" y="25" width="4" height="94" rx="2" fill="#07746d" stroke="none"/>
+<text x="47.000" y="44" fill="#07746d" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="700" xml:space="preserve">MIT DIFFUSION LAB 3    /    CODE ATLAS</text>
+<text x="46.000" y="85" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="39" font-weight="700" xml:space="preserve">VAE、条件 Flow 与 DiT</text>
+<text x="47.000" y="116" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="18" font-weight="400" xml:space="preserve">从 MNIST 到潜空间，再从标准高斯生成数字。三条流程分别对应作业中的训练与推理入口。</text>
+<rect x="1207" y="29" width="124" height="29" rx="5" fill="#e4f5f1" stroke="none"/>
+<text x="1232.250" y="49" fill="#07746d" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="700" xml:space="preserve">01 / 总流程</text>
+<rect x="1077" y="68" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1077" y="79" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1077" y="90" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1077" y="101" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1088" y="68" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1088" y="79" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1088" y="90" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1088" y="101" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1099" y="68" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1099" y="79" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1099" y="90" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1099" y="101" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1110" y="68" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1110" y="79" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1110" y="90" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1110" y="101" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<polyline points="1132,88 1164,88" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1156.1,83.69 1164,88 1156.1,92.31" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1178" y="75" width="10" height="26" rx="2" fill="#eaf2fd" stroke="none"/>
+<rect x="1192" y="75" width="10" height="26" rx="2" fill="#b8d0f0" stroke="none"/>
+<rect x="1206" y="75" width="10" height="26" rx="2" fill="#71a2da" stroke="none"/>
+<rect x="1220" y="75" width="10" height="26" rx="2" fill="#eaf2fd" stroke="none"/>
+<rect x="1234" y="75" width="10" height="26" rx="2" fill="#b8d0f0" stroke="none"/>
+<rect x="1248" y="75" width="10" height="26" rx="2" fill="#71a2da" stroke="none"/>
+<rect x="1262" y="75" width="10" height="26" rx="2" fill="#eaf2fd" stroke="none"/>
+<rect x="1276" y="75" width="10" height="26" rx="2" fill="#b8d0f0" stroke="none"/>
+<rect x="28" y="145" width="1304" height="201" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="46" y="160" width="43" height="29" rx="5" fill="#eaf2fd" stroke="none"/>
+<text x="62.250" y="180" fill="#255eaa" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="700" xml:space="preserve">A</text>
+<text x="103.000" y="182" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="700" xml:space="preserve">训练 VAE：学会编码与重建</text>
+<text x="1058.000" y="180" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="400" xml:space="preserve">MNISTVAETrainer.get_train_loss</text>
+<rect x="46" y="198" width="182" height="94" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="56" y="208" width="4" height="74" rx="2" fill="#255eaa" stroke="none"/>
+<text x="70.000" y="232" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">MNISTSampler</text>
+<text x="70.000" y="256" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">x : B×1×32×32</text>
+<text x="70.000" y="278" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="15" font-weight="400" xml:space="preserve">VAE 训练不使用标签</text>
+<rect x="254" y="198" width="228" height="94" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="264" y="208" width="4" height="74" rx="2" fill="#255eaa" stroke="none"/>
+<text x="278.000" y="232" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">vae.encode(x)</text>
+<text x="278.000" y="256" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">z_mean : B×128×4×4</text>
+<text x="278.000" y="278" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">z_logvar : </text>
+<text x="377.000" y="278" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">标量</text>
+<rect x="508" y="198" width="225" height="94" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="518" y="208" width="4" height="74" rx="2" fill="#255eaa" stroke="none"/>
+<text x="532.000" y="232" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="700" xml:space="preserve">后验重参数化</text>
+<text x="532.000" y="256" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">z = μz + exp(ℓz/2)·ε</text>
+<text x="532.000" y="278" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">ε ~ N(0,I)</text>
+<rect x="759" y="198" width="220" height="94" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="769" y="208" width="4" height="74" rx="2" fill="#255eaa" stroke="none"/>
+<text x="783.000" y="232" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">vae.decode(z)</text>
+<text x="783.000" y="256" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">x_mean : B×1×32×32</text>
+<text x="783.000" y="278" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">x_logvar : </text>
+<text x="882.000" y="278" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">标量</text>
+<rect x="1005" y="198" width="309" height="94" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="1015" y="208" width="4" height="74" rx="2" fill="#255eaa" stroke="none"/>
+<text x="1029.000" y="232" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">VAE.compute_loss</text>
+<text x="1029.000" y="256" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">重建</text>
+<text x="1061.000" y="256" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve"> NLL + β·KL</text>
+<text x="1160.000" y="256" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">（逐项取均值）</text>
+<text x="1029.000" y="278" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">反向传播更新 VAE 的编码器与解码器</text>
+<polyline points="231,246 251,246" fill="none" stroke="#255eaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="243.1,241.69 251,246 243.1,250.31" fill="none" stroke="#255eaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="485,246 505,246" fill="none" stroke="#255eaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="497.1,241.69 505,246 497.1,250.31" fill="none" stroke="#255eaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="736,246 756,246" fill="none" stroke="#255eaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="748.1,241.69 756,246 748.1,250.31" fill="none" stroke="#255eaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="982,246 1002,246" fill="none" stroke="#255eaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="994.1,241.69 1002,246 994.1,250.31" fill="none" stroke="#255eaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="137,296 137,320 1148,320 1148,295" fill="none" stroke="#255eaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<polyline points="1143.69,302.9 1148,295 1152.31,302.9" fill="none" stroke="#255eaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="368,296 368,320" fill="none" stroke="#255eaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<circle cx="368" cy="320" r="3" fill="#255eaa"/>
+<rect x="472" y="306" width="445" height="28" rx="0" fill="#ffffff" stroke="none"/>
+<text x="486.000" y="326" fill="#255eaa" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">原图 x 用于重建损失；编码器的 μz、ℓz 用于先验 KL。</text>
+<rect x="28" y="360" width="1304" height="253" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="46" y="375" width="43" height="29" rx="5" fill="#e4f5f1" stroke="none"/>
+<text x="62.750" y="395" fill="#07746d" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="700" xml:space="preserve">B</text>
+<text x="103.000" y="397" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="700" xml:space="preserve">训练条件 Flow：DiT 回归潜空间速度</text>
+<text x="1049.500" y="395" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="400" xml:space="preserve">LatentCFGTrainer.get_train_loss</text>
+<rect x="46" y="441" width="174" height="96" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="56" y="451" width="4" height="76" rx="2" fill="#07746d" stroke="none"/>
+<text x="70.000" y="475" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">MNISTSampler</text>
+<text x="70.000" y="499" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">(x, y) ~ MNIST</text>
+<text x="70.000" y="521" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">图像 + 数字标签</text>
+<rect x="246" y="441" width="226" height="96" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="256" y="451" width="4" height="76" rx="2" fill="#255eaa" stroke="none"/>
+<text x="270.000" y="475" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">vae.encode(x)</text>
+<text x="270.000" y="499" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">抽样</text>
+<text x="302.000" y="499" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve"> z</text>
+<text x="320.000" y="499" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">★</text>
+<text x="333.000" y="499" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve"> : B×128×4×4</text>
+<text x="270.000" y="521" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">torch.no_grad()</text>
+<rect x="498" y="441" width="278" height="96" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="508" y="451" width="4" height="76" rx="2" fill="#07746d" stroke="none"/>
+<text x="522.000" y="475" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="700" xml:space="preserve">构造高斯路径</text>
+<text x="522.000" y="499" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">sample_conditional_path</text>
+<text x="522.000" y="521" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">Z</text>
+<text x="531.000" y="521" fill="#45586c" font-family="Segoe UI Symbol, sans-serif" font-size="16" font-weight="400" xml:space="preserve">ₜ</text>
+<text x="534.000" y="521" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve"> = t·z</text>
+<text x="588.000" y="521" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">★</text>
+<text x="601.000" y="521" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve"> + (1−t)·ε</text>
+<rect x="802" y="441" width="230" height="96" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="812" y="451" width="4" height="76" rx="2" fill="#6744a3" stroke="none"/>
+<text x="826.000" y="475" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">DiT.forward</text>
+<text x="826.000" y="499" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">输入</text>
+<text x="858.000" y="499" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve"> (Z</text>
+<text x="885.000" y="499" fill="#45586c" font-family="Segoe UI Symbol, sans-serif" font-size="16" font-weight="400" xml:space="preserve">ₜ</text>
+<text x="888.000" y="499" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">, t, ỹ)</text>
+<text x="826.000" y="521" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">输出</text>
+<text x="858.000" y="521" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve"> v̂ : B×128×4×4</text>
+<rect x="1058" y="441" width="256" height="96" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="1068" y="451" width="4" height="76" rx="2" fill="#955917" stroke="none"/>
+<text x="1082.000" y="475" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="700" xml:space="preserve">速度回归 MSE</text>
+<text x="1082.000" y="499" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">mean((v̂ − v_ref)²)</text>
+<text x="1082.000" y="521" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">只更新潜空间 DiT</text>
+<polyline points="223,490 243,490" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="235.1,485.69 243,490 235.1,494.31" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="475,490 495,490" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="487.1,485.69 495,490 487.1,494.31" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="779,490 799,490" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="791.1,485.69 799,490 791.1,494.31" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1035,490 1055,490" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1047.1,485.69 1055,490 1047.1,494.31" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="680,438 680,420 1186,420 1186,438" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<polyline points="1190.31,430.1 1186,438 1181.69,430.1" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="724" y="403" width="409" height="29" rx="0" fill="#ffffff" stroke="none"/>
+<text x="737.000" y="425" fill="#07746d" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="14" font-weight="400" xml:space="preserve">conditional_vector_field → v_ref = (z</text>
+<text x="1014.500" y="425" fill="#07746d" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" xml:space="preserve">★</text>
+<text x="1026.000" y="425" fill="#07746d" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="14" font-weight="400" xml:space="preserve">−Z</text>
+<text x="1041.000" y="425" fill="#07746d" font-family="Segoe UI Symbol, sans-serif" font-size="14" font-weight="400" xml:space="preserve">ₜ</text>
+<text x="1044.000" y="425" fill="#07746d" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="14" font-weight="400" xml:space="preserve">)/(1−t)</text>
+<polyline points="133,540 133,557 902,557 902,540" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<polyline points="897.69,547.9 902,540 906.31,547.9" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="275" y="544" width="488" height="27" rx="0" fill="#ffffff" stroke="none"/>
+<text x="288.000" y="563" fill="#6744a3" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">标签支路：以概率 η = 0.35 将 y 换成 10（空标签），得到 </text>
+<text x="710.000" y="563" fill="#6744a3" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">ỹ</text>
+<text x="47.000" y="597" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">像素版用 CFGTrainer：跳过 VAE，直接令训练终点 z★ = 原图 x；两版均直接采 t 和路径状态，不解 ODE。</text>
+<rect x="28" y="627" width="1304" height="262" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="46" y="642" width="43" height="29" rx="5" fill="#f1ebfb" stroke="none"/>
+<text x="62.750" y="662" fill="#6744a3" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="700" xml:space="preserve">C</text>
+<text x="103.000" y="664" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="700" xml:space="preserve">生成：CFG 合成速度，Euler 逐步积分</text>
+<text x="1024.000" y="662" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="400" xml:space="preserve">LatentCFGTrainer.visualize_samples</text>
+<rect x="46" y="683" width="187" height="110" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="56" y="693" width="4" height="90" rx="2" fill="#07746d" stroke="none"/>
+<text x="70.000" y="717" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="700" xml:space="preserve">标准高斯起点</text>
+<text x="70.000" y="741" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">z₀ ~ N(0,I)</text>
+<text x="70.000" y="763" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">B×128×4×4</text>
+<rect x="259" y="683" width="365" height="110" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="269" y="693" width="4" height="90" rx="2" fill="#6744a3" stroke="none"/>
+<text x="283.000" y="717" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">CFGVectorFieldODE</text>
+<text x="283.000" y="741" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="15" font-weight="400" xml:space="preserve">同一个</text>
+<text x="328.000" y="741" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="400" xml:space="preserve"> DiT</text>
+<text x="362.000" y="741" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="15" font-weight="400" xml:space="preserve">：</text>
+<text x="377.000" y="741" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="400" xml:space="preserve">net(z</text>
+<text x="419.500" y="741" fill="#45586c" font-family="Segoe UI Symbol, sans-serif" font-size="15" font-weight="400" xml:space="preserve">ₜ</text>
+<text x="422.500" y="741" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="400" xml:space="preserve">,t,y) </text>
+<text x="473.500" y="741" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="15" font-weight="400" xml:space="preserve">和</text>
+<text x="488.500" y="741" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="400" xml:space="preserve"> net(z</text>
+<text x="539.500" y="741" fill="#45586c" font-family="Segoe UI Symbol, sans-serif" font-size="15" font-weight="400" xml:space="preserve">ₜ</text>
+<text x="542.500" y="741" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="400" xml:space="preserve">,t,10)</text>
+<text x="283.000" y="763" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">ṽ = (1−w)·v_null + w·v_cond</text>
+<rect x="650" y="683" width="239" height="110" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="660" y="693" width="4" height="90" rx="2" fill="#07746d" stroke="none"/>
+<text x="674.000" y="717" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">EulerSimulator</text>
+<text x="674.000" y="741" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">z_next = z</text>
+<text x="764.000" y="741" fill="#45586c" font-family="Segoe UI Symbol, sans-serif" font-size="16" font-weight="400" xml:space="preserve">ₜ</text>
+<text x="767.000" y="741" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve"> + Δt·ṽ</text>
+<text x="674.000" y="763" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">t : 0 → 0.999</text>
+<rect x="915" y="683" width="204" height="110" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="925" y="693" width="4" height="90" rx="2" fill="#255eaa" stroke="none"/>
+<text x="939.000" y="717" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">vae.decode</text>
+<text x="939.000" y="741" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">输入末端</text>
+<text x="1003.000" y="741" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve"> z_final</text>
+<text x="939.000" y="763" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">只取 x_mean</text>
+<rect x="1145" y="683" width="169" height="110" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="1155" y="693" width="4" height="90" rx="2" fill="#255eaa" stroke="none"/>
+<text x="1169.000" y="717" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="700" xml:space="preserve">生成图像</text>
+<text x="1169.000" y="741" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">B×1×32×32</text>
+<text x="1169.000" y="763" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">按标签排列</text>
+<polyline points="236,737 256,737" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="248.1,732.69 256,737 248.1,741.31" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="627,737 647,737" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="639.1,732.69 647,737 639.1,741.31" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="892,737 912,737" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="904.1,732.69 912,737 904.1,741.31" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1122,737 1142,737" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1134.1,732.69 1142,737 1134.1,741.31" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="770,796 770,826 443,826 443,796" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<polyline points="438.69,803.9 443,796 447.31,803.9" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="472" y="812" width="265" height="27" rx="0" fill="#ffffff" stroke="none"/>
+<text x="516.000" y="832" fill="#6744a3" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="700" xml:space="preserve">用新状态和下一时刻重复</text>
+<text x="47.000" y="870" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">推理只需指定 y 和 w，不需要真实图像；像素版直接输出积分后的图像，不经过 vae.decode。</text>
+<polyline points="29,909 1331,909" fill="none" stroke="#d8e1ea" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="30.000" y="932" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="15" font-weight="400" xml:space="preserve">lab_three.ipynb   /   VAE: 70–74   ·   CFG / Euler: 17, 29, 31, 51   ·   潜空间: 78–79</text>
+<text x="1026.500" y="932" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="15" font-weight="400" xml:space="preserve">实线：主张量流    虚线：旁路输入 / 迭代反馈</text>
+</svg>

@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="795" viewBox="0 0 1360 795" role="img" aria-labelledby="title desc">
+<title id="title">DiT 一次前向的张量流</title><desc id="desc">分开展示空间 token 路径与时间、标签调制，并给出像素和潜空间两套实参。</desc>
+<rect x="0" y="0" width="1360" height="795" rx="0" fill="#f6f8fa" stroke="none"/>
+<rect x="28" y="25" width="4" height="94" rx="2" fill="#07746d" stroke="none"/>
+<text x="47.000" y="44" fill="#07746d" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="700" xml:space="preserve">MIT DIFFUSION LAB 3    /    CODE ATLAS</text>
+<text x="46.000" y="85" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="39" font-weight="700" xml:space="preserve">DiT 一次前向的张量流</text>
+<text x="47.000" y="116" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="18" font-weight="400" xml:space="preserve">DiffusionTransformerFlowModel.forward(x, t, y) 只返回当前状态的速度，与输入同形。</text>
+<rect x="1207" y="29" width="124" height="29" rx="5" fill="#e4f5f1" stroke="none"/>
+<text x="1218.250" y="49" fill="#07746d" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="700" xml:space="preserve">02 / DiT 放大图</text>
+<rect x="1077" y="68" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1077" y="79" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1077" y="90" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1077" y="101" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1088" y="68" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1088" y="79" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1088" y="90" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1088" y="101" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1099" y="68" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1099" y="79" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1099" y="90" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1099" y="101" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1110" y="68" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<rect x="1110" y="79" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1110" y="90" width="9" height="9" rx="1" fill="#b7ddd6" stroke="none"/>
+<rect x="1110" y="101" width="9" height="9" rx="1" fill="#e4f5f1" stroke="none"/>
+<polyline points="1132,88 1164,88" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1156.1,83.69 1164,88 1156.1,92.31" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1178" y="75" width="10" height="26" rx="2" fill="#eaf2fd" stroke="none"/>
+<rect x="1192" y="75" width="10" height="26" rx="2" fill="#b8d0f0" stroke="none"/>
+<rect x="1206" y="75" width="10" height="26" rx="2" fill="#71a2da" stroke="none"/>
+<rect x="1220" y="75" width="10" height="26" rx="2" fill="#eaf2fd" stroke="none"/>
+<rect x="1234" y="75" width="10" height="26" rx="2" fill="#b8d0f0" stroke="none"/>
+<rect x="1248" y="75" width="10" height="26" rx="2" fill="#71a2da" stroke="none"/>
+<rect x="1262" y="75" width="10" height="26" rx="2" fill="#eaf2fd" stroke="none"/>
+<rect x="1276" y="75" width="10" height="26" rx="2" fill="#b8d0f0" stroke="none"/>
+<rect x="28" y="145" width="1304" height="258" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="46" y="160" width="43" height="29" rx="5" fill="#f1ebfb" stroke="none"/>
+<text x="62.250" y="180" fill="#6744a3" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="700" xml:space="preserve">A</text>
+<text x="103.000" y="182" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="700" xml:space="preserve">主路径：空间张量 → tokens → 速度</text>
+<text x="998.500" y="180" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="400" xml:space="preserve">DiffusionTransformerFlowModel.forward</text>
+<rect x="46" y="202" width="175" height="94" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="56" y="212" width="4" height="74" rx="2" fill="#07746d" stroke="none"/>
+<text x="70.000" y="236" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="700" xml:space="preserve">当前状态 x</text>
+<text x="70.000" y="260" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">B×C×H×W</text>
+<text x="70.000" y="282" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">不是最终图像</text>
+<rect x="247" y="202" width="238" height="94" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="257" y="212" width="4" height="74" rx="2" fill="#6744a3" stroke="none"/>
+<text x="271.000" y="236" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">Patchifier</text>
+<text x="271.000" y="260" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">Conv2d(k=p, stride=p)</text>
+<text x="271.000" y="282" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">→ B×N×256</text>
+<rect x="511" y="202" width="286" height="94" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="521" y="212" width="4" height="74" rx="2" fill="#6744a3" stroke="none"/>
+<text x="535.000" y="236" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="19" font-weight="700" xml:space="preserve">DiffusionTransformer</text>
+<text x="535.000" y="260" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">先加可学习位置编码</text>
+<text x="535.000" y="282" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">再应用 8 层调制 Transformer</text>
+<rect x="823" y="202" width="300" height="94" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="833" y="212" width="4" height="74" rx="2" fill="#6744a3" stroke="none"/>
+<text x="847.000" y="236" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">Depatchifier</text>
+<text x="847.000" y="260" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">RMSNorm → MLP(256→1024→10p²)</text>
+<text x="847.000" y="282" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">拼回</text>
+<text x="879.000" y="282" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve"> B×10×H×W → Conv3×3</text>
+<rect x="1149" y="202" width="165" height="94" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="1159" y="212" width="4" height="74" rx="2" fill="#07746d" stroke="none"/>
+<text x="1173.000" y="236" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="700" xml:space="preserve">速度 u</text>
+<text x="1232.000" y="236" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="400" xml:space="preserve">̂</text>
+<text x="1173.000" y="260" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">B×C×H×W</text>
+<text x="1173.000" y="282" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">不预测噪声</text>
+<polyline points="224,249 244,249" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="236.1,244.69 244,249 236.1,253.31" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="488,249 508,249" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="500.1,244.69 508,249 500.1,253.31" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="800,249 820,249" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="812.1,244.69 820,249 812.1,253.31" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1126,249 1146,249" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1138.1,244.69 1146,249 1138.1,253.31" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="46" y="333" width="245" height="46" rx="6" fill="#e4f5f1" stroke="none"/>
+<text x="60.000" y="362" fill="#07746d" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="17" font-weight="400" xml:space="preserve">t → FourierEncoder(t)</text>
+<rect x="315" y="333" width="251" height="46" rx="6" fill="#e4f5f1" stroke="none"/>
+<text x="330.000" y="362" fill="#07746d" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="17" font-weight="400" xml:space="preserve">y → Embedding(11,256)</text>
+<rect x="594" y="333" width="222" height="46" rx="6" fill="#f1ebfb" stroke="none"/>
+<text x="610.000" y="362" fill="#6744a3" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="17" font-weight="700" xml:space="preserve">c = e</text>
+<text x="657.500" y="362" fill="#6744a3" font-family="Segoe UI Symbol, sans-serif" font-size="17" font-weight="400" xml:space="preserve">ₜ</text>
+<text x="661.000" y="362" fill="#6744a3" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="17" font-weight="700" xml:space="preserve"> + eᵧ   B×256</text>
+<polyline points="170,329 170,315 694,315" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<polyline points="444,329 444,315" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<polyline points="694,315 694,330" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<polyline points="698.31,322.1 694,330 689.69,322.1" fill="none" stroke="#07746d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="444" cy="315" r="3" fill="#07746d"/>
+<polyline points="819,356 852,356 852,309 743,309 743,299" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<polyline points="738.69,306.9 743,299 747.31,306.9" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="875.000" y="363" fill="#6744a3" font-family="Microsoft YaHei, sans-serif" font-size="17" font-weight="400" xml:space="preserve">条件向量送入每一层，不是额外 token。</text>
+<rect x="28" y="417" width="1304" height="207" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="46" y="432" width="43" height="29" rx="5" fill="#f1ebfb" stroke="none"/>
+<text x="62.750" y="452" fill="#6744a3" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="700" xml:space="preserve">B</text>
+<text x="103.000" y="454" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="700" xml:space="preserve">单层：对同一组 tokens 连续做两次门控残差</text>
+<text x="1032.500" y="452" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="400" xml:space="preserve">DiffusionTransformerLayer.forward</text>
+<rect x="46" y="469" width="1268" height="37" rx="5" fill="#f1ebfb" stroke="none"/>
+<text x="61.000" y="494" fill="#6744a3" font-family="Microsoft YaHei, sans-serif" font-size="17" font-weight="400" xml:space="preserve">c → RMSNorm → Linear(256,1536) → 分成注意力、前馈两组 (scale, bias, gate)；投影为零初始化</text>
+<rect x="46" y="521" width="129" height="69" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="56" y="531" width="4" height="49" rx="2" fill="#07746d" stroke="none"/>
+<text x="70.000" y="555" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">H</text>
+<text x="70.000" y="579" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">B×N×256</text>
+<rect x="200" y="521" width="483" height="69" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="210" y="531" width="4" height="49" rx="2" fill="#6744a3" stroke="none"/>
+<text x="224.000" y="555" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="700" xml:space="preserve">① 注意力残差</text>
+<text x="224.000" y="579" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">H′ = H + gateₐ · MHA(modulate(RMSNorm(H)))</text>
+<rect x="710" y="521" width="462" height="69" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="720" y="531" width="4" height="49" rx="2" fill="#6744a3" stroke="none"/>
+<text x="734.000" y="555" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="700" xml:space="preserve">② 前馈残差</text>
+<text x="734.000" y="579" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">H″ = H′ + g_ff · MLP(modulate(RMSNorm(H′)))</text>
+<rect x="1197" y="521" width="117" height="69" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="1207" y="531" width="4" height="49" rx="2" fill="#07746d" stroke="none"/>
+<text x="1221.000" y="555" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="20" font-weight="700" xml:space="preserve">H″</text>
+<text x="1221.000" y="579" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="16" font-weight="400" xml:space="preserve">B×N×256</text>
+<polyline points="178,554 197,554" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="189.1,549.69 197,554 189.1,558.31" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="686,554 707,554" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="699.1,549.69 707,554 699.1,558.31" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1175,554 1194,554" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1186.1,549.69 1194,554 1186.1,558.31" fill="none" stroke="#6744a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="46.000" y="610" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">modulate(H) = H·(1 + scale) + bias     |     8 个注意力头，每头 32 维     |     前馈 MLP: 256 → 1024 → 256</text>
+<rect x="28" y="638" width="1304" height="105" rx="8" fill="#ffffff" stroke="#d8e1ea"/>
+<rect x="46" y="653" width="43" height="29" rx="5" fill="#e4f5f1" stroke="none"/>
+<text x="62.750" y="673" fill="#07746d" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="700" xml:space="preserve">C</text>
+<text x="103.000" y="675" fill="#182638" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="700" xml:space="preserve">两种配置：网络职责相同，空间与 token 数不同</text>
+<text x="1125.000" y="673" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="15" font-weight="400" xml:space="preserve">训练配置：单元格</text>
+<text x="1245.000" y="673" fill="#45586c" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="15" font-weight="400" xml:space="preserve"> 53 / 79</text>
+<text x="47.000" y="701" fill="#255eaa" font-family="Microsoft YaHei, sans-serif" font-size="17" font-weight="700" xml:space="preserve">像素版</text>
+<text x="142.000" y="701" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="17" font-weight="400" xml:space="preserve">B×1×32×32  →  p=4  →  B×64×256  →  B×1×32×32</text>
+<text x="47.000" y="727" fill="#07746d" font-family="Microsoft YaHei, sans-serif" font-size="17" font-weight="700" xml:space="preserve">潜空间版</text>
+<text x="142.000" y="727" fill="#182638" font-family="Consolas, Microsoft YaHei, Segoe UI Symbol, monospace" font-size="17" font-weight="400" xml:space="preserve">B×128×4×4  →  p=1  →  B×16×256  →  B×128×4×4</text>
+<text x="1065.508" y="715" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" xml:space="preserve">B：batch   C：通道   N：token 数</text>
+<polyline points="29,759 1331,759" fill="none" stroke="#d8e1ea" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="30.000" y="781" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="15" font-weight="400" xml:space="preserve">lab_three.ipynb   /   编码器、分块与 DiT: 40–49   ·   像素及潜空间配置: 53, 79</text>
+<text x="1057.000" y="781" fill="#45586c" font-family="Microsoft YaHei, sans-serif" font-size="15" font-weight="400" xml:space="preserve">实线：主张量流    虚线：时间与类别条件</text>
+</svg>
